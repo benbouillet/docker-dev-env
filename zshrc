@@ -97,7 +97,6 @@ export TODOTXT_DEFAULT_ACTION=ls
 compdef todo.sh
 
 alias py=python3
-alias k=kubectl
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 
@@ -117,7 +116,8 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+print 'going to source ~/.p10k.zsh; press enter to continue'
+[[ ! -f /root/.p10k.zsh ]] || source /root/.p10k.zsh
 
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
@@ -163,7 +163,6 @@ function condactivate() {
     conda activate $1
     echo 'Conda environment' $1 'activated'
 }
-[[ /Users/ben/google-cloud-sdk/bin/kubectl ]] && source <(kubectl completion zsh)
 
 export DB_USER=postgres
 export DB_PASS=postgres
