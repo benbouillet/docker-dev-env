@@ -1,6 +1,12 @@
 FROM ubuntu:20.04
 
+ENV USER=ben
 ENV HOME_DIR=/root
+
+
+RUN adduser -D ${USER}
+RUN mkdir -p /app \
+    && chown -R main:main /app
 
 RUN apt-get update
 RUN apt-get install -y software-properties-common=0.98.9.5

@@ -57,44 +57,10 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colorize github jira vagrant virtualenv pip python brew osx docker docker-compose)
+plugins=(git colorize github virtualenv pip python docker docker-compose)
 autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# ssh
-# export SSH_KEY_PATH="~/.ssh/rsa_id"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-# fpath=(/usr/local/share/zsh-completions)
-
-alias todo='~/Installs/todo-txt/todo.sh'
-export TODOTXT_DEFAULT_ACTION=ls
-compdef todo.sh
 
 alias py=python3
 
@@ -119,10 +85,6 @@ zle -N zle-keymap-select
 print 'going to source ~/.p10k.zsh; press enter to continue'
 [[ ! -f /root/.p10k.zsh ]] || source /root/.p10k.zsh
 
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/Users/ben/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -138,22 +100,8 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# Terraform
-export PATH="$PATH:$HOME/Installs"
-
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /Users/ben/Installs/terraform terraform
-
-alias tmux='tmux -2'
-
-
-export PATH="$HOME/.poetry/bin:$PATH"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/ben/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/ben/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/ben/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ben/google-cloud-sdk/completion.zsh.inc'; fi
 
 # Automate conda deactivate/activate
 # prints the input
@@ -163,10 +111,5 @@ function condactivate() {
     conda activate $1
     echo 'Conda environment' $1 'activated'
 }
-
-export DB_USER=postgres
-export DB_PASS=postgres
-export DB_NAME=postgres
-
 # Auto-completion
 autoload -U compinit && compinit
