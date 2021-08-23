@@ -3,16 +3,15 @@ FROM ubuntu:20.04
 ENV USER=ben
 ENV HOME_DIR=/root
 
-
 RUN adduser -D ${USER}
 RUN mkdir -p /app \
     && chown -R main:main /app
 
-RUN apt-get update
-RUN apt-get install -y software-properties-common=0.98.9.5
-RUN add-apt-repository -y ppa:neovim-ppa/stable
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y software-properties-common=0.98.9.5 && \
+    add-apt-repository -y ppa:neovim-ppa/stable
+RUN apt-get update && \
+    apt-get install -y \
         python3-dev python3-pip \
         neovim=0.4.4-1~ubuntu20.04.1~ppa1 \
         curl=7.68.0-1ubuntu2.5 \ 
