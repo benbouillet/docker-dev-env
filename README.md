@@ -17,3 +17,4 @@
 * [Processes In Containers Should Not Run As Root](https://medium.com/@mccode/processes-in-containers-should-not-run-as-root-2feae3f0df3b)
 * [Docker security](https://docs.docker.com/engine/security/)
 * [Vim As an IDE for Python 2021](https://medium.com/nerd-for-tech/vim-as-an-ide-for-python-2021-f922da6d2cfe)
+* [Production-ready Docker packaging for Python developers](https://pythonspeed.com/docker/)

@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM python:3.9.6-slim
 
 ENV USER=ben
 ENV HOME_DIR=/root
