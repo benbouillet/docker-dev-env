@@ -1,12 +1,11 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# If you come from bash you might have to change your $PATH.
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+
+# Define Time zone
+export TZ="/usr/share/zoneinfo/Europe/Paris"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -14,7 +13,8 @@ export ZSH=$HOME/.oh-my-zsh
 # ZSH_THEME="pygmalion"
 # ZSH_THEME="agnoster"
 ZSH_THEME="powerlevel10k/powerlevel10k"
-#
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs vi_mode time)
+
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -35,10 +35,10 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-COMPLETION_WAITING_DOTS="true"
+# COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -48,7 +48,7 @@ COMPLETION_WAITING_DOTS="true"
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-HIST_STAMPS="dd.mm.yyyy"
+# HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -57,7 +57,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colorize github jira vagrant virtualenv pip python brew osx docker docker-compose)
+plugins=(git colorize github pip python)
 autoload -U compinit && compinit
 
 source $ZSH/oh-my-zsh.sh
@@ -97,7 +97,6 @@ export TODOTXT_DEFAULT_ACTION=ls
 compdef todo.sh
 
 alias py=python3
-alias k=kubectl
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 
@@ -116,58 +115,18 @@ SAVEHIST=1000
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/Users/ben/opt/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_setup="$('/anaconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/Users/ben/opt/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/Users/ben/opt/miniconda3/etc/profile.d/conda.sh"
+    if [ -f "/anaconda/etc/profile.d/conda.sh" ]; then
+        . "/anaconda/etc/profile.d/conda.sh"
     else
-        export PATH="/Users/ben/opt/miniconda3/bin:$PATH"
+        export PATH="/anaconda/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# Terraform
-export PATH="$PATH:$HOME/Installs"
-
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /Users/ben/Installs/terraform terraform
-
-alias tmux='tmux -2'
-
-
-export PATH="$HOME/.poetry/bin:$PATH"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/ben/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/ben/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/ben/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/ben/google-cloud-sdk/completion.zsh.inc'; fi
-
-# Automate conda deactivate/activate
-# prints the input
-function condactivate() {
-    conda deactivate
-    conda deactivate
-    conda activate $1
-    echo 'Conda environment' $1 'activated'
-}
-[[ /Users/ben/google-cloud-sdk/bin/kubectl ]] && source <(kubectl completion zsh)
-
-export DB_USER=postgres
-export DB_PASS=postgres
-export DB_NAME=postgres
-
-# Auto-completion
-autoload -U compinit && compinit
