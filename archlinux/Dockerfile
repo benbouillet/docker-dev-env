@@ -1,14 +1,15 @@
 FROM archlinux:base-devel
 
-ENV USER=ben
-ENV USER_HOME=/home/$USER
-
 RUN pacman -Syu --noconfirm
 RUN pacman -Sy --noconfirm git \
        wget \
        tmux \
        neovim \
        zsh
+
+ARG USER
+ENV USER=$USER
+ENV USER_HOME=/home/$USER
 
 RUN useradd -m ${USER}
 
@@ -27,7 +28,7 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions $USER_HOME/.oh-my
 # Copy zsh config
 COPY p10k.zsh $USER_HOME/.p10k.zsh
 COPY zshrc  $USER_HOME/.zshrc
-COPY tmux.conf
+COPY tmux.conf $USER_HOME/.tmux.conf
 
 WORKDIR $USER_HOME/dev
 

@@ -92,13 +92,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 # fpath=(/usr/local/share/zsh-completions)
 
-alias todo='~/Installs/todo-txt/todo.sh'
-export TODOTXT_DEFAULT_ACTION=ls
-compdef todo.sh
-
 alias py=python3
-
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 
 bindkey -v
 HISTFILE=~/.histfile
@@ -130,3 +124,4 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+set -o vi
