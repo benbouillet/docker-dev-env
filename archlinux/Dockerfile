@@ -5,7 +5,8 @@ RUN pacman -Sy --noconfirm git \
        wget \
        tmux \
        neovim \
-       zsh
+       zsh \
+       fonts-powerline
 
 ARG USER
 ENV USER=$USER
@@ -29,6 +30,10 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions $USER_HOME/.oh-my
 COPY p10k.zsh $USER_HOME/.p10k.zsh
 COPY zshrc  $USER_HOME/.zshrc
 COPY tmux.conf $USER_HOME/.tmux.conf
+
+# ZSH Configs
+RUN git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 
 WORKDIR $USER_HOME/dev
 
@@ -54,4 +59,4 @@ WORKDIR $USER_HOME/dev
 
 
 # Setup my $SHELL
-ENV SHELL /bin/zsh
+ENV SHELL ["/bin/zsh"]
