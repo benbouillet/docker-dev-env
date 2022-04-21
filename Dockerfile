@@ -9,18 +9,17 @@ RUN apt-get update -y && apt-get upgrade -y
 RUN apt-get install -y \
 	git \
 	wget \
-	zsh
+	zsh \
+	vim
 
 USER ${USER}
 WORKDIR /home/${USER}
 
 RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - | zsh || true
-RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /root/.oh-my-zsh/themes/powerlevel10k
-
-RUN ln -f /bin/zsh /bin/sh
+# RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.oh-my-zsh/themes/powerlevel10k
 
 COPY zshrc ${HOME_DIR}/.zshrc
-COPY p10k.zsh ${HOME_DIR}/.p10k.zsh
+# COPY p10k.zsh ${HOME_DIR}/.p10k.zsh
 
 ENTRYPOINT ["zsh"]
 
