@@ -6,6 +6,7 @@ RUN useradd -m  ${USER}
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+	ca-certificates \
 	git \
 	wget \
 	zsh \
