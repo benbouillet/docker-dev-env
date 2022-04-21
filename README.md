@@ -1,11 +1,6 @@
 # Personal Environment Docker Image
 
 ## Links
-* [A complete guide to building a Docker Image serving a Machine learning system in Production - Towards Data Science](https://towardsdatascience.com/a-complete-guide-to-building-a-docker-image-serving-a-machine-learning-system-in-production-d8b5b0533bde)
-* [Using Alpine can make Python Docker builds 50× slower](https://pythonspeed.com/articles/alpine-docker-python/)
-* [Conda: Myths and Misconceptions](https://jakevdp.github.io/blog/2016/08/25/conda-myths-and-misconceptions/)
-* [Pipenv vs Conda (for Data Scientists)](https://towardsdatascience.com/pipenv-vs-conda-for-data-scientists-b9a372faf9d9)
-* [AWS WhitePaper : MLOps: Continuous Delivery for Machine Learning on AWS](https://d1.awsstatic.com/whitepapers/mlops-continuous-delivery-machine-learning-on-aws.pdf)
 * [Setting up ZSH in Docker](https://dev.to/arctic_hen7/setting-up-zsh-in-docker-263f)
 * [ZSH configuration for nice Docker shells in Alpine](https://gist.github.com/arctic-hen7/bbfcc3021f7592d2013ee70470fee60b)
 * [This allows an instance of the IDE per project](https://github.com/ls12styler/ide)
@@ -18,3 +13,9 @@
 * [Docker security](https://docs.docker.com/engine/security/)
 * [Vim As an IDE for Python 2021](https://medium.com/nerd-for-tech/vim-as-an-ide-for-python-2021-f922da6d2cfe)
 * [Production-ready Docker packaging for Python developers](https://pythonspeed.com/docker/)
+
+## TODO
+
+- [ ] Oh My Zsh
+- [ ] Powerlevel10k
+- [ ] Vim + Plugin Manager (Vundle ?)
