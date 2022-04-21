@@ -63,6 +63,8 @@ autoload -U compinit && compinit
 source $ZSH/oh-my-zsh.sh
 
 alias py=python3
+alias k=kubectl
+alias xargs='xargs '
 
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
 
