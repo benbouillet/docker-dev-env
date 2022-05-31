@@ -5,6 +5,10 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Antigen plugin manager
+source $HOME/.antigen/antigen.zsh
+source $HOME/.antigenrc
+
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
@@ -15,7 +19,7 @@ HIST_STAMPS="dd.mm.yyyy"
 
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(git colorize github docker docker-compose)
+plugins=(git colorize github docker docker-compose autodotenv kubectl)
 
 # Auto-completion
 autoload -U compinit && compinit
