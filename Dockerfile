@@ -1,9 +1,12 @@
 FROM ubuntu:20.04
 
-ENV USER=ben
+ARG USER=ben
+ENV GROUP=${USER}
 ENV HOME=/home/${USER}
 
-RUN useradd -m  ${USER}
+RUN groupadd ${GROUP}
+
+RUN useradd -m -g ${GROUP} ${USER}
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
@@ -36,9 +39,9 @@ RUN curl -L git.io/antigen > ${HOME}/.antigen/antigen.zsh
 RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - | zsh || true
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${HOME}/.oh-my-zsh/themes/powerlevel10k
 
-COPY zshrc ${HOME}/.zshrc
-COPY antigenrc ${HOME}/.antigenrc
-COPY p10k.zsh ${HOME}/.p10k.zsh
+COPY --chown=${USER}:${GROUP} zshrc ${HOME}/.zshrc
+COPY --chown=${USER}:${GROUP} antigenrc ${HOME}/.antigenrc
+COPY --chown=${USER}:${GROUP} p10k.zsh ${HOME}/.p10k.zsh
 
 ENTRYPOINT ["zsh"]
 

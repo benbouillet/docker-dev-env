@@ -16,6 +16,9 @@
 
 ## TODO
 
-- [ ] Oh My Zsh
+- [x] Oh My Zsh
+- [x] Management of user/group and permissions
 - [ ] Powerlevel10k
+- [ ] easymotion for zsh
+- [ ] colors in zsh
 - [ ] Vim + Plugin Manager (Vundle ?)
