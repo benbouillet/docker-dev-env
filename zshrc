@@ -19,7 +19,7 @@ HIST_STAMPS="dd.mm.yyyy"
 
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-plugins=(git colorize github docker docker-compose autodotenv kubectl)
+plugins=(git colorize github docker docker-compose dotenv kubectl)
 
 # Auto-completion
 autoload -U compinit && compinit
