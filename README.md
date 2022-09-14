@@ -19,6 +19,16 @@
 - [x] Oh My Zsh
 - [x] Management of user/group and permissions
 - [ ] Powerlevel10k
+- [ ] tmux
 - [ ] easymotion for zsh
 - [ ] colors in zsh
 - [ ] Vim + Plugin Manager (Vundle ?)
+
+## Usage
+```sh
+docker build -t <image_name>:<tag> --build-arg USER=<user> .
+```
+
+```sh
+docker run -it -n <container_name> <image_name>:<tag>
+```
