@@ -17,6 +17,8 @@
 ## TODO
 
 - [x] Oh My Zsh
+- [x] Oh-my zsh plugins
+- [x] locales
 - [x] Management of user/group and permissions
 - [ ] Powerlevel10k
 - [ ] tmux

@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
 ARG USER=ben
 ENV GROUP=${USER}
@@ -9,15 +9,21 @@ RUN groupadd ${GROUP}
 RUN useradd -m -g ${GROUP} ${USER}
 
 RUN apt-get update -y && apt-get upgrade -y
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
+RUN apt-get install -y \
 	ca-certificates \
 	curl \
 	git \
 	wget \
-	zsh \
-	tzdata \
 	docker \
-	vim
+	vim \
+    fzf \
+	zsh \
+    fd-find \
+    zsh-syntax-highlighting \
+    tmux \
+    locales \
+    locales-all
 
 # Configuring locales
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
@@ -38,6 +44,9 @@ WORKDIR /home/${USER}
 # Oh-My-Zsh configuration
 RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O - | zsh || true
 # RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+
+# ZSH syntax highlighting installation
+RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${HOME}/.config/zsh-syntax-highlighting
 
 COPY --chown=${USER}:${GROUP} zshrc ${HOME}/.zshrc
 # COPY --chown=${USER}:${GROUP} antigenrc ${HOME}/.antigenrc
