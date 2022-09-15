@@ -20,7 +20,7 @@
 - [x] Oh-my zsh plugins
 - [x] locales
 - [x] Management of user/group and permissions
-- [ ] Powerlevel10k
+- [x] Powerlevel10k
 - [ ] tmux
 - [ ] easymotion for zsh
 - [ ] colors in zsh
