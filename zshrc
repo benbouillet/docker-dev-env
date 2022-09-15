@@ -12,17 +12,10 @@ export FZF_BASE=/usr/bin/fzf
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+# zsh theme
 ZSH_THEME="robbyrussell"
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
+# zsh plugins
 plugins=(git
   github
   docker
@@ -44,6 +37,8 @@ plugins=(git
   terraform # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/terraform
   tmux # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/tmux
   vi-mode # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/vi-mode
+  zsh-syntax-highlighting
+  zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -54,33 +49,10 @@ HISTSIZE=1000
 SAVEHIST=1000
 
 # Auto-completion
-# autoload -U compinit && compinit
-
-# User configuration
-
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+autoload -U compinit && compinit
 
 # vi-mode
 VI_MODE_SET_CURSOR=true
 
-# Zsh syntax highlighting installation
-source ${HOME}/.config/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# aliases
+alias k=kubectl
