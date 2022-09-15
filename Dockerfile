@@ -51,7 +51,7 @@ RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-${H
 
 COPY --chown=${USER}:${GROUP} zshrc ${HOME}/.zshrc
 # COPY --chown=${USER}:${GROUP} antigenrc ${HOME}/.antigenrc
-# COPY --chown=${USER}:${GROUP} p10k.zsh ${HOME}/.p10k.zsh
+COPY --chown=${USER}:${GROUP} p10k.zsh ${HOME}/.p10k.zsh
 
 ENTRYPOINT ["zsh"]
 
