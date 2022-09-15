@@ -11,7 +11,7 @@ build:
 	docker build -t docker-env-dev .
 
 run:
-	@docker run -it docker-env-dev $(call args,)
+	@docker run -e TERM -e COLORTERM -it docker-env-dev $(call args,)
 
 brun: build
-	@docker run -it docker-env-dev $(call args,)
+	@docker run -e TERM -e COLORTERM -it docker-env-dev $(call args,)
