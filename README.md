@@ -21,7 +21,7 @@
 - [x] locales
 - [x] Management of user/group and permissions
 - [x] Powerlevel10k
-- [ ] tmux
+- [x] tmux
 - [ ] easymotion for zsh
 - [ ] colors in zsh
 - [ ] Vim + Plugin Manager (Vundle ?)

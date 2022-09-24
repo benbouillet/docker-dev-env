@@ -3,6 +3,10 @@ FROM ubuntu:22.04
 ARG USER=ben
 ENV GROUP=${USER}
 ENV HOME=/home/${USER}
+ENV TMUX_SESSION_NAME=devops
+ENV ZSH_TMUX_AUTOSTART=true
+ENV ZSH_TMUX_UNICODE=true
+ENV ZSH_TMUX_DEFAULT_SESSION_NAME=devops
 
 RUN groupadd ${GROUP}
 
@@ -24,6 +28,8 @@ RUN apt-get install -y \
     tmux \
     locales \
     locales-all
+
+RUN usermod -s /bin/zsh ${USER}
 
 # Configuring locales
 RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
@@ -50,8 +56,10 @@ RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUS
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
 COPY --chown=${USER}:${GROUP} zshrc ${HOME}/.zshrc
+COPY --chown=${USER}:${GROUP} tmux.conf ${HOME}/.tmux.conf
 # COPY --chown=${USER}:${GROUP} antigenrc ${HOME}/.antigenrc
 COPY --chown=${USER}:${GROUP} p10k.zsh ${HOME}/.p10k.zsh
 
-ENTRYPOINT ["zsh"]
+# CMD [${TMUX_SESSION_NAME}]
 
+ENTRYPOINT ["zsh"]
