@@ -25,9 +25,6 @@ export FZF_BASE=/usr/bin/fzf
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# zsh theme
-ZSH_THEME="robbyrussell"
-
 # zsh plugins
 plugins=(git
   github
