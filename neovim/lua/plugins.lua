@@ -41,16 +41,15 @@ function M.setup()
   local function plugins(use)
     use { "wbthomason/packer.nvim" }
 
-    -- Load only when require
-    use { "nvim-lua/plenary.nvim", module = "plenary" }
+    -- Performance
+    use { "lewis6991/impatient.nvim" }
 
-    -- Colorscheme
-    use {
-      "sainnhe/everforest",
-      config = function()
-        vim.cmd "colorscheme everforest"
-      end,
+    use {                                              -- filesystem navigation
+      'kyazdani42/nvim-tree.lua',
+      requires = 'kyazdani42/nvim-web-devicons'        -- filesystem icons
     }
+    -- Colorscheme
+    use "arcticicestudio/nord-vim"
 
     -- Bootstrap Neovim
     if packer_bootstrap then
