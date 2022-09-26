@@ -7,10 +7,11 @@ ENV TMUX_SESSION_NAME=devops
 ENV ZSH_TMUX_AUTOSTART=true
 ENV ZSH_TMUX_UNICODE=true
 ENV ZSH_TMUX_DEFAULT_SESSION_NAME=devops
+ENV XDG_CONFIG_HOME=${HOME}/.config
+ENV XDG_DATA_HOME=${HOME}/.local/share
 
 RUN groupadd ${GROUP}
-
-RUN useradd -m -g ${GROUP} ${USER}
+RUN useradd -m -g ${USER} ${GROUP}
 
 RUN apt-get update -y && apt-get upgrade -y
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
@@ -27,7 +28,21 @@ RUN apt-get install -y \
     zsh-syntax-highlighting \
     tmux \
     locales \
-    locales-all
+    locales-all \
+    # docker.io \
+    neovim \
+    luajit
+
+RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
+RUN apt install ./nvim-linux64.deb
+
+# Issue with neovim https://github.com/nvim-telescope/telescope.nvim/issues/2158#issuecomment-1237716752
+
+# Docker in Docker configuration
+# RUN groupadd docker
+# RUN usermod -aG docker ${USER}
+# RUN touch /var/run/docker.sock
+# RUN chown root:docker /var/run/docker.sock
 
 RUN usermod -s /bin/zsh ${USER}
 
@@ -54,9 +69,11 @@ RUN wget https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.
 RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+# RUN git clone --depth=1 https://github.com/wbthomason/packer.nvim.git ${XDG_DATA_HOME}/nvim/site/pack/packer/start/packer.nvim
 
 COPY --chown=${USER}:${GROUP} zshrc ${HOME}/.zshrc
 COPY --chown=${USER}:${GROUP} tmux.conf ${HOME}/.tmux.conf
+COPY --chown=${USER}:${GROUP} neovim/ /${HOME}/.config/nvim/
 # COPY --chown=${USER}:${GROUP} antigenrc ${HOME}/.antigenrc
 COPY --chown=${USER}:${GROUP} p10k.zsh ${HOME}/.p10k.zsh
 

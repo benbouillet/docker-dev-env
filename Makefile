@@ -11,7 +11,7 @@ build:
 	docker build -t docker-env-dev .
 
 run:
-	@docker run -e TERM -e COLORTERM -it docker-env-dev $(call args,)
+	@docker run -e TERM -e COLORTERM -v /Users/ben/.colima/default/docker.sock:/var/run/docker.sock -it docker-env-dev $(call args,)
 
 brun: build
-	@docker run -e TERM -e COLORTERM -it docker-env-dev $(call args,)
+	@docker run -e TERM -e COLORTERM -v /Users/ben/.colima/default/docker.sock:/var/run/docker.sock -it docker-env-dev $(call args,)

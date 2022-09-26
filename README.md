@@ -22,9 +22,8 @@
 - [x] Management of user/group and permissions
 - [x] Powerlevel10k
 - [x] tmux
-- [ ] easymotion for zsh
-- [ ] colors in zsh
 - [ ] Vim + Plugin Manager (Vundle ?)
+- [ ] Docker in Docker
 
 ## Usage
 ```sh
