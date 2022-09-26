@@ -12,7 +12,7 @@ source ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k/powerlevel10k
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/local:$PATH
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -69,3 +69,4 @@ VI_MODE_SET_CURSOR=true
 
 # aliases
 alias k=kubectl
+alias nvim=$HOME/local/nvim/bin/nvim

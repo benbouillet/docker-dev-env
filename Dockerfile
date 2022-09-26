@@ -1,3 +1,14 @@
+# Neovim full lua support build (see https://github.com/nvim-telescope/telescope.nvim/issues/2158#issuecomment-1237716752)
+FROM ubuntu:22.04 AS nvim_builder
+RUN apt-get update
+RUN apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl doxygen git -y
+RUN git clone https://github.com/neovim/neovim
+WORKDIR /neovim
+RUN git checkout stable
+RUN make CMAKE_BUILD_TYPE=RelWithDebInfo
+RUN make CMAKE_INSTALL_PREFIX=/root/local/nvim install
+
+# DevOps image
 FROM ubuntu:22.04
 
 ARG USER=ben
@@ -28,15 +39,10 @@ RUN apt-get install -y \
     zsh-syntax-highlighting \
     tmux \
     locales \
-    locales-all \
+    locales-all
     # docker.io \
-    neovim \
-    luajit
-
-RUN wget https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb
-RUN apt install ./nvim-linux64.deb
-
-# Issue with neovim https://github.com/nvim-telescope/telescope.nvim/issues/2158#issuecomment-1237716752
+    # neovim \
+    # luajit
 
 # Docker in Docker configuration
 # RUN groupadd docker
@@ -53,6 +59,8 @@ RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
 # kubectl
 # RUN curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/$(dpkg --print-architecture)/kubectl"
 # RUN install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+COPY --from=nvim_builder /root/local/nvim ${HOME}/local/nvim
 
 USER ${USER}
 WORKDIR /home/${USER}
