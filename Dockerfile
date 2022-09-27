@@ -39,7 +39,8 @@ RUN apt-get install -y \
     zsh-syntax-highlighting \
     tmux \
     locales \
-    locales-all
+    locales-all \
+    stow
     # docker.io \
     # neovim \
     # luajit
