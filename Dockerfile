@@ -40,10 +40,13 @@ RUN apt-get install -y \
     tmux \
     locales \
     locales-all \
-    stow
+    python3 \
+    pip
     # docker.io \
     # neovim \
     # luajit
+
+RUN python3 -m pip install --user --upgrade pynvim
 
 # Docker in Docker configuration
 # RUN groupadd docker
@@ -63,6 +66,8 @@ RUN ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime \
 
 COPY --from=nvim_builder /root/local/nvim ${HOME}/local/nvim
 
+RUN chown -R ${USER}:${GROUP} ${HOME}/.local
+
 USER ${USER}
 WORKDIR /home/${USER}
 
@@ -79,13 +84,16 @@ RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTO
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 # RUN git clone --depth=1 https://github.com/wbthomason/packer.nvim.git ${XDG_DATA_HOME}/nvim/site/pack/packer/start/packer.nvim
+RUN echo $(ls -lha /home/ben/.local)
+#RUN mkdir -p ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/
+RUN wget  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim  -P ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/
 
 COPY --chown=${USER}:${GROUP} zshrc ${HOME}/.zshrc
 COPY --chown=${USER}:${GROUP} tmux.conf ${HOME}/.tmux.conf
-COPY --chown=${USER}:${GROUP} neovim/ /${HOME}/.config/nvim/
+COPY --chown=${USER}:${GROUP} init.vim ${HOME}/.config/nvim/
 # COPY --chown=${USER}:${GROUP} antigenrc ${HOME}/.antigenrc
 COPY --chown=${USER}:${GROUP} p10k.zsh ${HOME}/.p10k.zsh
 
-# CMD [${TMUX_SESSION_NAME}]
+RUN ${HOME}/local/nvim/bin/nvim +PlugInstall! +qa
 
 ENTRYPOINT ["zsh"]

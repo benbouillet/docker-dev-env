@@ -8,9 +8,12 @@ call plug#begin('~/.vim/plugged')
 " Side bar file tree
 Plug 'preservim/nerdtree'
 
+" Theme
+Plug 'shaunsingh/nord.nvim'
+
 " A command-line fuzzy finder
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
 
 " Commenting
 Plug 'tpope/vim-commentary'
@@ -21,11 +24,10 @@ Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 " Python PEP8 autoindent
 Plug 'Vimjas/vim-python-pep8-indent'
 
-" CoC - Python LSP
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
 " Minimal statusbar
-Plug 'itchyny/lightline.vim'
+Plug 'nvim-lualine/lualine.nvim'
+" If you want to have icons in your statusline choose one of these
+Plug 'kyazdani42/nvim-web-devicons'
 
 " provides some Python-specific text objects: classes, functions, etc
 Plug 'jeetsukumaran/vim-pythonsense'
@@ -33,20 +35,14 @@ Plug 'jeetsukumaran/vim-pythonsense'
 " inserts closing quotes and parenthesis as you type
 Plug 'jiangmiao/auto-pairs'
 
-" Check syntax in Vim asynchronously (compatible with coc.nvim)
-Plug 'dense-analysis/ale'
-
 " allows git commands in vim session
 Plug 'tpope/vim-fugitive'
 
 " shows git changes in gutter
 Plug 'airblade/vim-gitgutter'
 
-" go to any word quickly '\\w', '\\e', '\\b'
-Plug 'easymotion/vim-easymotion'
-
-" send commands to REPL
-Plug 'KKPMW/vim-sendtowindow'
+" easy motion
+Plug 'phaazon/hop.nvim'
 
 " scrolling 'C-d' or 'C-u'
 Plug 'yuttie/comfortable-motion.vim'
@@ -66,18 +62,14 @@ Plug 'honza/vim-snippets'
 " Code folding (zo: open, zc: close)
 Plug 'tmhedberg/SimpylFold'
 
-" Theme
-Plug 'morhetz/gruvbox'
+" high-performance color highlighter
+Plug 'norcalli/nvim-colorizer.lua'
 
-" Slimux : send commands to other tmux window
-Plug 'esamattis/slimux'
+" LSP & auto-complete
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+
 call plug#end()
-
-" Coc-Jedi
-Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
-
-" Conda environment handling
-Plug 'cjrh/vim-conda'
 
 " =======================================================
 " ============== NVim general settings ==================
@@ -108,6 +100,33 @@ set cursorline                  " Highlights current line
 
 " Splits settings
 set splitbelow splitright
+
+" Autoreload 
+set autoread                    " reload files changed outside of Vim not currently modified in Vim (needs below)
+au FocusGained,BufEnter * :silent! !   " Triggers autoreload when focusing on vim or changing buffer
+
+" Autowrite when leaving a buffer or vim
+au FocusLost,WinLeave * :silent! w
+au FocusLost,WinLeave * :silent! noautocmd w  " disabling any hooks that run on save (e.g. linters) to speed up write
+
+" errors flash screen rather than emit beep
+set visualbell
+
+" line numbers and distances
+set relativenumber
+
+" statusline indicates insert or normal mode
+set showmode showcmd
+
+" highlight matching parens, braces, brackets, etc
+set showmatch
+
+" Search parameters
+set hlsearch incsearch ignorecase smartcase
+
+" =======================================================
+" ==================== Mappings =========================
+" =======================================================
 " Remap splits navigation to just CTRL + hjkl
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -121,27 +140,16 @@ noremap <silent> <C-Down> :resize +3<CR>
 " Change 2 split windows from vert to horiz or horiz to vert
 map <Leader>th <C-w>t<C-w>H
 map <Leader>tk <C-w>t<C-w>K
+" Add blank lines in Normal mode
+nnoremap <Enter> o<ESC>
+nnoremap <S-Enter> O<ESC>
+" Navigate between tabs
+nnoremap <S-h> gT
+nnoremap <S-l> gt
 
-" Autoreload
-set autoread                    " reload files changed outside of Vim not currently modified in Vim (needs below)
-au FocusGained,BufEnter * :silent! !
-
-" errors flash screen rather than emit beep
-set visualbell
-
-" line numbers and distances
-set relativenumber
-set number
-
-" statusline indicates insert or normal mode
-set showmode showcmd
-
-" highlight matching parens, braces, brackets, etc
-set showmatch
-
-" Search parameters
-set hlsearch incsearch ignorecase smartcase
-
+" =======================================================
+" ================ Python specifics =====================
+" =======================================================
 " Set python executable
 " let g:python3_host_prog = '~/anaconda3/envs/nvim/bin/python'
 if has('nvim') && !empty($CONDA_PREFIX)
@@ -152,7 +160,7 @@ endif
 " ============== Theme settings =========================
 " =======================================================
 " Theme settings
-autocmd vimenter * ++nested colorscheme gruvbox
+autocmd vimenter * ++nested colorscheme nord
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
@@ -160,20 +168,28 @@ if exists('+termguicolors')
 endif
 
 " =======================================================
-" ============== Keyboard bindings ======================
+" ============== Files settings =======================
 " =======================================================
-" Add blank lines in Normal mode
-map <Enter> o<ESC>
-map <S-Enter> O<ESC>
-imap ii <Esc>
-" Navigate between tabs
-nnoremap H gT
-nnoremap L gt
+" YAML config
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType yml setlocal ts=2 sts=2 sw=2 expandtab
+" Python config
+autocmd FileType py setlocal ts=4 sts=4 sw=4 expandtab
+
+" =======================================================
+" ================ Theme settings =======================
+" =======================================================
+lua << EOF
+require('lualine').setup {
+    options = {
+        theme = 'nord'
+    }
+}
+EOF
 
 " =======================================================
 " ============== Plugins settings =======================
 " =======================================================
-
 " junegunn/fzf
 " Ctrl-F in any more will trigger file search
 map <C-f> <Esc><Esc>:Files!<CR>
@@ -196,38 +212,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
-
-" Use <Tab> or custom key for trigger completion
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-" Use <Tab> and <S-Tab> to navigate the completion list:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Flake ignore E501 (line too long) error
-let g:syntastic_python_flake8_args='--ignore=F821,E302,E501'
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-nmap <silent> gv :vsplit<CR><Plug>(coc-definition)
-
-" ALE
-let g:ale_disable_lsp = 1
-
-" Ultisnips
-" Trigger configuration. You need to change this to something other than <tab> if you use one of the following:
-" - https://github.com/Valloric/YouCompleteMe
-" - https://github.com/nvim-lua/completion-nvim
-let g:UltiSnipsExpandTrigger="<c-s>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
-
-" If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
-
 
 " markdown-preview.nvim
 let g:mkdp_auto_start = 0
@@ -256,29 +240,21 @@ let g:mkdp_page_title = '„Äå${name}„Äç'
 " vim-isort 
 let g:vim_isort_map = '<C-i>'
 
-" Ale Linting
-let g:ale_sign_column_always=1
-let g:ale_lint_on_enter=1
-let g:ale_lint_on_text_changed='always'
-let g:ale_echo_msg_error_str='E'
-let g:ale_echo_msg_warning_str='W'
-let g:ale_echo_msg_format='[%linter%] %s [%severity%]: [%...code...%]'
-let g:ale_linters={'python': ['flake8'], 'r': ['lintr']}
-let g:ale_fixers={'python': ['black']}
-let g:ale_python_flake8_options = '--ignore=E501'
-
 " gitgutter
 let g:gitgutter_async=0
 
 " nerdtree settings
 map <C-n> :NERDTreeToggle<CR>
-let NERDTreeIgnore = ['\.pyc$']  " ignore pyc files
+let NERDTreeIgnore = ['\.pyc$', '.DS_Store']
 
-" Slimux config
-map <Leader>i :SlimuxREPLSendLine<CR>
-vmap <Leader>i :SlimuxREPLSendSelection<CR>
-map <Leader>I :SlimuxREPLSendBuffer<CR>
-
-" YAML config
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-autocmd FileType yml setlocal ts=2 sts=2 sw=2 expandtab
+" =======================================================
+" ================== Lua settings =======================
+" =======================================================
+" lua << EOF
+" -- servers = {
+" --     'pyright',
+" --     --'tsserver', -- uncomment for typescript. See https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md for other language servers
+" -- }
+" -- require('lspconfig-config')
+" -- require('telescope-config')
+" EOF
