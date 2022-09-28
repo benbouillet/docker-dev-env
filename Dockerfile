@@ -84,18 +84,18 @@ RUN git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTO
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 RUN git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-${HOME}/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 RUN git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
-# RUN git clone --depth=1 https://github.com/wbthomason/packer.nvim.git ${XDG_DATA_HOME}/nvim/site/pack/packer/start/packer.nvim
-RUN echo $(ls -lha /home/ben/.local)
-#RUN mkdir -p ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/
-RUN wget  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim  -P ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/
+RUN git clone --depth=1 https://github.com/wbthomason/packer.nvim.git ${XDG_DATA_HOME}/nvim/site/pack/packer/start/packer.nvim
+# RUN mkdir -p ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/
+# RUN wget  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim  -P ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/
 
 COPY --chown=${USER}:${GROUP} zshrc ${HOME}/.zshrc
 COPY --chown=${USER}:${GROUP} tmux.conf ${HOME}/.tmux.conf
-COPY --chown=${USER}:${GROUP} init.vim ${HOME}/.config/nvim/
+COPY --chown=${USER}:${GROUP} neovim ${HOME}/.config/nvim/
 # COPY --chown=${USER}:${GROUP} antigenrc ${HOME}/.antigenrc
 COPY --chown=${USER}:${GROUP} p10k.zsh ${HOME}/.p10k.zsh
 
 RUN ${HOME}/.tmux/plugins/tpm/bin/install_plugins
-RUN ${HOME}/local/nvim/bin/nvim +PlugInstall! +qa
+# RUN ${HOME}/local/nvim/bin/nvim +PlugInstall! +qa
+RUN ${HOME}/local/nvim/bin/nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 
 ENTRYPOINT ["zsh"]

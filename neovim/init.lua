@@ -1,80 +1,9 @@
-" =======================================================
-" ============== vim-plug - plugins =====================
-" =======================================================
-
-" Initialization
-call plug#begin('~/.vim/plugged')
-
-" Side bar file tree
-Plug 'preservim/nerdtree'
-
-" Theme
-Plug 'shaunsingh/nord.nvim'
-
-" A command-line fuzzy finder
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-
-" Commenting
-Plug 'tpope/vim-commentary'
-
-" Syntax HighlightinPlug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}g
-Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
-
-" Python PEP8 autoindent
-Plug 'Vimjas/vim-python-pep8-indent'
-
-" Minimal statusbar
-Plug 'nvim-lualine/lualine.nvim'
-" If you want to have icons in your statusline choose one of these
-Plug 'kyazdani42/nvim-web-devicons'
-
-" provides some Python-specific text objects: classes, functions, etc
-Plug 'jeetsukumaran/vim-pythonsense'
-
-" inserts closing quotes and parenthesis as you type
-Plug 'jiangmiao/auto-pairs'
-
-" allows git commands in vim session
-Plug 'tpope/vim-fugitive'
-
-" shows git changes in gutter
-Plug 'airblade/vim-gitgutter'
-
-" easy motion
-Plug 'phaazon/hop.nvim'
-
-" scrolling 'C-d' or 'C-u'
-Plug 'yuttie/comfortable-motion.vim'
-
-" Python sort imports [dep]: pip3 install isort
-Plug 'fisadev/vim-isort'
-
-" Markdown preview
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
-
-" Python Snippets
-Plug 'SirVer/ultisnips'
-
-" Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-
-" Code folding (zo: open, zc: close)
-Plug 'tmhedberg/SimpylFold'
-
-" high-performance color highlighter
-Plug 'norcalli/nvim-colorizer.lua'
-
-" LSP & auto-complete
-Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-
-call plug#end()
-
-" =======================================================
-" ============== NVim general settings ==================
-" =======================================================
-" General Settings
+require('plugins')
+-- =======================================================
+-- ============== NVim general settings ==================
+-- =======================================================
+-- General Settings
+vim.cmd([[
 set number                      " set line numbers
 set updatetime=100              " set update time for gitgutter update
 set noswapfile                  " no swap
@@ -123,11 +52,13 @@ set showmatch
 
 " Search parameters
 set hlsearch incsearch ignorecase smartcase
+]])
 
-" =======================================================
-" ==================== Mappings =========================
-" =======================================================
-" Remap splits navigation to just CTRL + hjkl
+-- =======================================================
+-- ==================== Mappings =========================
+-- =======================================================
+-- Remap splits navigation to just CTRL + hjkl
+vim.cmd([[
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -146,19 +77,23 @@ nnoremap <S-Enter> O<ESC>
 " Navigate between tabs
 nnoremap <S-h> gT
 nnoremap <S-l> gt
+]])
 
-" =======================================================
-" ================ Python specifics =====================
-" =======================================================
+-- =======================================================
+-- ================ Python specifics =====================
+-- =======================================================
+vim.cmd([[
 " Set python executable
 " let g:python3_host_prog = '~/anaconda3/envs/nvim/bin/python'
 if has('nvim') && !empty($CONDA_PREFIX)
   let g:python3_host_prog = $CONDA_PREFIX . '/bin/python'
 endif
+]])
 
-" =======================================================
-" ============== Theme settings =========================
-" =======================================================
+-- =======================================================
+-- ============== Theme settings =========================
+-- =======================================================
+vim.cmd([[
 " Theme settings
 autocmd vimenter * ++nested colorscheme nord
 if exists('+termguicolors')
@@ -166,30 +101,32 @@ if exists('+termguicolors')
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
 endif
+]])
 
-" =======================================================
-" ============== Files settings =======================
-" =======================================================
+-- =======================================================
+-- ============== Files settings =======================
+-- =======================================================
+vim.cmd([[
 " YAML config
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType yml setlocal ts=2 sts=2 sw=2 expandtab
 " Python config
 autocmd FileType py setlocal ts=4 sts=4 sw=4 expandtab
+]])
 
-" =======================================================
-" ================ Theme settings =======================
-" =======================================================
-lua << EOF
+-- =======================================================
+-- ================ Theme settings =======================
+-- =======================================================
 require('lualine').setup {
     options = {
         theme = 'nord'
     }
 }
-EOF
 
-" =======================================================
-" ============== Plugins settings =======================
-" =======================================================
+-- =======================================================
+-- ============== Plugins settings =======================
+-- =======================================================
+vim.cmd([[
 " junegunn/fzf
 " Ctrl-F in any more will trigger file search
 map <C-f> <Esc><Esc>:Files!<CR>
@@ -246,15 +183,16 @@ let g:gitgutter_async=0
 " nerdtree settings
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$', '.DS_Store']
+]])
+-- =======================================================
+-- ================== Lua settings =======================
+-- =======================================================
+-- lua << EOF
+-- -- servers = {
+-- --     'pyright',
+-- --     --'tsserver', -- uncomment for typescript. See https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md for other language servers
+-- -- }
+-- -- require('lspconfig-config')
+-- -- require('telescope-config')
+-- EOF
 
-" =======================================================
-" ================== Lua settings =======================
-" =======================================================
-" lua << EOF
-" -- servers = {
-" --     'pyright',
-" --     --'tsserver', -- uncomment for typescript. See https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md for other language servers
-" -- }
-" -- require('lspconfig-config')
-" -- require('telescope-config')
-" EOF
