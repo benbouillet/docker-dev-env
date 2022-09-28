@@ -51,8 +51,6 @@ plugins=(git
   zsh-autosuggestions
 )
 
-source $ZSH/oh-my-zsh.sh
-
 HIST_STAMPS="dd.mm.yyyy"
 HISTFILE=~/.histfile
 HISTSIZE=1000
@@ -67,3 +65,6 @@ VI_MODE_SET_CURSOR=true
 # aliases
 alias k=kubectl
 alias nvim=$HOME/local/nvim/bin/nvim
+
+# Put this at the EOF
+source $ZSH/oh-my-zsh.sh
