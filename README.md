@@ -24,6 +24,7 @@
 - [x] tmux
 - [ ] Vim + Plugin Manager (Vundle ?)
 - [ ] Docker in Docker
+- rg
 
 ## Usage
 ```sh
