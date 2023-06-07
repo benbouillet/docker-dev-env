@@ -1,0 +1,22 @@
+#!/bin/bash
+set -eEuo pipefail
+
+IMAGE=nvim-dev
+
+function build {
+    TAG="${1:-latest}"
+    docker build -t ${IMAGE}:${TAG} .
+}
+
+function run {
+    docker run --rm -it --mount type=bind,source="$(pwd)",target=/workdir ${IMAGE}
+}
+
+function help {
+    echo "Usage: $0 <subcommand> <args>"
+    echo "Commands:"
+    compgen -A function | egrep -v "^_" | cat -n
+}
+
+TIMEFORMAT="Task completed in %3lR"
+time ${@:-help}

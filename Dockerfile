@@ -36,16 +36,13 @@ RUN apt-get update && \
     apt-get install -y \
 #         liblua5.4-0 \
 #         libluajit-5.1-2 \
+        ripgrep \
         git
-
-# Install Packer
-RUN git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
 
 # Copy configuration files
 COPY neovim /root/.config/nvim/
 
 # Install plugins headlessly
-RUN nvim --headless +PackerSync +qall
+RUN nvim --headless "+Lazy! sync" +qall
 
 CMD ["/bin/bash", "-c", "nvim"]
